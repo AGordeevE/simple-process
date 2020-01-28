@@ -35,7 +35,7 @@ class Application : DefaultApi {
     }
 
     override fun delete(uuid: UUID): ResponseEntity<Void> {
-        return ResponseEntity.ok(null)
+        return ResponseEntity.noContent().build()
     }
 
 }
