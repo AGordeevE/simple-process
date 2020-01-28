@@ -1,0 +1,125 @@
+openapi: 3.0.1
+
+info:
+  title: Simple process engine
+  version: "0.1"
+
+paths:
+  /entities:
+    summary: Processes collection
+    get:
+      operationId: listAll
+      summary: Get list of processes
+      responses:
+        200:
+          $ref: '#/components/responses/ProcessList'
+    post:
+      operationId: create
+      summary: Create new Process
+      requestBody:
+        $ref: '#/components/requestBodies/Process'
+      responses:
+        201:
+          $ref: '#/components/responses/Process'
+  /entities/{uuid}:
+    parameters:
+      - name: uuid
+        in: path
+        description: Process ID
+        required: true
+        schema:
+          $ref: '#/components/schemas/ProcessId'
+    get:
+      operationId: getById
+      summary: Get process details
+      responses:
+        200:
+          $ref: '#/components/responses/Process'
+    put:
+      operationId: update
+      summary: Update process details
+      requestBody:
+        $ref: '#/components/requestBodies/Process'
+      responses:
+        200:
+          $ref: '#/components/responses/Process'
+    delete:
+      operationId: delete
+      summary: Delete process
+      responses:
+        204:
+          $ref: '#/components/responses/NoContent'
+
+components:
+  requestBodies:
+    Process:
+      description: Process to create/update
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ModifyProcessDTO'
+
+  responses:
+    NoContent:
+      description: No content
+    ProcessList:
+      description: List of processes
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProcessDTOList'
+    Process:
+      description: Process details
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProcessDTO'
+
+  schemas:
+    ErrorMessage:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        parameters:
+          type: object
+      required: ["code", "message", "parameters"]
+
+    ProcessId:
+      type: string
+      format: uuid
+
+    ProcessState:
+      type: string
+      enum: ["new", "executing", "complete", "error"]
+
+    ProcessDTO:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ProcessId'
+        code:
+          type: string
+        context:
+          type: string
+        state:
+          $ref: '#/components/schemas/ProcessState'
+      required: ["id", "code"]
+    ProcessDTOList:
+      type: object
+      properties:
+        entities:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProcessDTO'
+    ModifyProcessDTO:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ProcessId'
+        code:
+          type: string
+      required: ["code"]

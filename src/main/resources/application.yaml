@@ -1,0 +1,26 @@
+application:
+  title: "@project.name@"
+  version: "@project.version@"
+
+spring:
+  main:
+    banner-mode: log
+  datasource:
+    url: jdbc:postgresql://localhost:5432/process?user=postgres&password=123456
+    driver-class-name: org.postgresql.Driver
+  jooq:
+    sql-dialect: postgres
+  cloud:
+    stream:
+      kafka:
+        binder:
+          configuration:
+            key.seriaizer: org.apache.kafka.common.serialization.StringSerializer
+            key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
+            value.deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+logging:
+  mode: text
+  level:
+    root: info
+    com.alex: debug

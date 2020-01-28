@@ -1,0 +1,3 @@
+spring:
+  datasource:
+    url: jdbc:tc:postgresql:10-alpine://localhost:5432/public?user=test&password=test
