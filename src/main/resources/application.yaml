@@ -1,6 +1,6 @@
 application:
-  title: "@project.name@"
-  version: "@project.version@"
+  title: "Simple process engine"
+  version: "0.1"
 
 spring:
   main:
@@ -10,14 +10,10 @@ spring:
     driver-class-name: org.postgresql.Driver
   jooq:
     sql-dialect: postgres
-  cloud:
-    stream:
-      kafka:
-        binder:
-          configuration:
-            key.seriaizer: org.apache.kafka.common.serialization.StringSerializer
-            key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
-            value.deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  security:
+    user:
+      name: alex
+      password: password
 
 logging:
   mode: text

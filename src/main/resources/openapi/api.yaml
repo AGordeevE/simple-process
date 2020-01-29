@@ -17,7 +17,10 @@ paths:
       operationId: create
       summary: Create new Process
       requestBody:
-        $ref: '#/components/requestBodies/Process'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProcessDTO'
       responses:
         201:
           $ref: '#/components/responses/Process'
@@ -39,7 +42,7 @@ paths:
       operationId: update
       summary: Update process details
       requestBody:
-        $ref: '#/components/requestBodies/Process'
+        $ref: '#/components/requestBodies/ModifyProcess'
       responses:
         200:
           $ref: '#/components/responses/Process'
@@ -52,7 +55,14 @@ paths:
 
 components:
   requestBodies:
-    Process:
+    CreateProcess:
+      description: Process to create/update
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateProcessDTO'
+    ModifyProcess:
       description: Process to create/update
       required: true
       content:
@@ -108,6 +118,7 @@ components:
         state:
           $ref: '#/components/schemas/ProcessState'
       required: ["id", "code"]
+
     ProcessDTOList:
       type: object
       properties:
@@ -115,6 +126,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ProcessDTO'
+
+    CreateProcessDTO:
+      type: object
+      properties:
+        code:
+          type: string
+      required: ["code"]
+
     ModifyProcessDTO:
       type: object
       properties:
