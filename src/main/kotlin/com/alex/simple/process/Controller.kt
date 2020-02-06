@@ -2,7 +2,7 @@ package com.alex.simple.process
 
 import com.alex.simple.process.api.DefaultApi
 import com.alex.simple.process.api.dto.*
-import com.alex.simple.process.domain.Process
+import com.alex.simple.process.domain.SProcess
 import com.alex.simple.process.service.ProcessService
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
@@ -13,7 +13,7 @@ class Controller(
     val processService: ProcessService
 ) : DefaultApi {
     override fun create(body: CreateProcessDTO): ResponseEntity<ProcessDTO> {
-        val process = processService.create(Process(body))
+        val process = processService.create(SProcess(body))
 
         return ResponseEntity.ok(ProcessDTO().id(process.uuid))
     }

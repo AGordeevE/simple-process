@@ -1,6 +1,6 @@
 package com.alex.simple.process.repository
 
-import com.alex.simple.process.domain.Process
+import com.alex.simple.process.domain.SProcess
 import com.alex.simple.process.jooq.tables.JProcesses.PROCESSES
 import com.alex.simple.process.service.ContextMapper
 import org.jooq.DSLContext
@@ -9,12 +9,12 @@ import org.springframework.stereotype.Repository
 
 @Repository
 class ProcessRepository(
-    val dslContext: DSLContext,
-    val contextMapper: ContextMapper
+    private val dslContext: DSLContext,
+    private val contextMapper: ContextMapper
 ) {
     val log = LoggerFactory.getLogger(javaClass)
 
-    fun createProcess(process: Process) {
+    fun createProcess(process: SProcess) {
         dslContext.insertInto(
             PROCESSES,
             PROCESSES.UUID,
@@ -29,5 +29,10 @@ class ProcessRepository(
                 process.count
             ).execute()
     }
+
+    fun getAll() =
+        dslContext
+            .selectFrom(PROCESSES)
+            .fetch { SProcess(it, contextMapper) }
 
 }
